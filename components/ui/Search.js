@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Buscar = () => {
+const Search = () => {
 return (
     <form>
         <input type="text" />
@@ -9,4 +9,4 @@ return (
 )
 }
 
-export default Buscar
+export default Search
