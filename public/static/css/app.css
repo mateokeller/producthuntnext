@@ -24,6 +24,8 @@ header {
     padding: 1rem 0;
 }
 
+
+
 h1, h2, h3 {
     margin: 0 0 2rem 0;
     line-height: 1.5;
@@ -48,6 +50,38 @@ a {
     text-decoration: none;
 }
 
+.header-container {
+    max-width: 1200px;
+    width: 95%;
+    margin: 0 auto;
+}
+
+.logo {
+    color: var(--orange);
+    font-size: 4rem;
+    font-weight: 700;
+    font-family: 'Roboto', sans-serif;
+    line-height: 0;
+    margin-right: 2rem;
+}
+
+.header-btn-container {
+    display: flex;
+}
+
+.btn {
+    font-family: "Roboto", sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    border: 1px solid #d1d1d1;
+    padding: .6rem 2rem;
+    margin-right: 1rem;
+}
+
+header > div > div:nth-child(2) > a:last-of-type button {
+    margin-right: 0;
+}
+
 .products-list {
     background-color: #f3f3f3;
 }
@@ -59,4 +93,12 @@ a {
 }
 .bg-white {
     background-color: #FFF;
+}
+
+/* MEDIA QUERYS */
+@media only screen and (min-width: 768px) {
+    .header-container  {
+        display:flex;
+        justify-content: space-between;
+    }
 }
