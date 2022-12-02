@@ -9,13 +9,13 @@ const useValidation = ( initialState, validate, fn ) => {
     
     useEffect( () => {
         if ( submitForm ) {
-            const noErrors = Object.keys( errors ).length === 0;
+            const noErrors = Object.keys(errors).length === 0;
             if ( noErrors ) {
                 fn(); /* funcion que ejecuta el componente */
             }
             setErrors( false );
         }
-    }, [] );
+    }, [errors] );
 
     /* Funcion que se ejecuta conforme el usuario escribe algo */
     const handleChange = e => {
