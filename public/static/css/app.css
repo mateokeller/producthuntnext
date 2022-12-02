@@ -17,6 +17,7 @@ html {
 body {
     font-size: 1.6rem;
     line-height: 1.5;
+    font-family: 'Roboto', sans-serif;
 }
 
 header {
@@ -32,7 +33,6 @@ h1, h2, h3 {
 }
 
 h1, h2 {
-    font-family: 'Roboto', sans-serif;
     font-weight: 700;
 }
 
@@ -54,6 +54,11 @@ a {
     max-width: 1200px;
     width: 95%;
     margin: 0 auto;
+}
+
+.nav-container {
+    display: flex;
+    align-items: center;
 }
 
 .logo {
@@ -78,8 +83,31 @@ a {
     margin-right: 1rem;
 }
 
-header > div > div:nth-child(2) > a:last-of-type button {
+header a:last-of-type > button {
     margin-right: 0;
+}
+
+button {
+    cursor: pointer;
+}
+
+nav {
+    padding-left: 2rem;
+}
+
+nav a {
+    font-size: 1.8rem;
+    margin-left: 2rem;
+    color: var(--grey2);
+    font-family: 'Open-sans', sans-serif;
+}
+
+nav a:last-of-type {
+    margin-right: 0;
+}
+
+.text-center {
+    text-align: center;
 }
 
 .products-list {
@@ -95,10 +123,90 @@ header > div > div:nth-child(2) > a:last-of-type button {
     background-color: #FFF;
 }
 
+.user-config-container {
+    display: flex;
+    align-items: center;
+}
+
+.user-name {
+    margin-right: 2rem;
+}
+
+.input-nav-container {
+    position: relative;
+}
+
+.search-input {
+    border: 1px solid var(--grey3);
+    padding: 1rem;
+    min-width: 300px;
+}
+
+.submit-input {
+    height: 2.6rem;
+    width: 2.8rem;
+    display: block;
+    background-size: 3.5rem;
+    background-image: url('/static/image/search-icon.png');
+    background-repeat: no-repeat;
+    position: absolute;
+    right: 1rem;
+    top: 3px;
+    background-color: white;
+    border: none;
+}
+
+.submit-input:hover {
+    cursor: pointer;
+}
+
+.create-account-title {
+    margin-top: 5rem;
+}
+
+form {
+    max-width: 600px;
+    width: 95%;
+    margin: 5rem auto 0 auto;
+}
+
+.form-field {
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+}
+
+.form-field > label {
+    flex: 0 0 150px;
+    font-size: 1.8rem;
+}
+
+.form-field > input {
+    flex: 1;
+    padding: 1rem;
+}
+
+.form-btn {
+    background-color: var(--orange);
+    width: 100%;
+    padding: 1.5rem;
+    text-align: center;
+    color: #fff;
+    font-size: 1.8rem;
+    text-transform: uppercase;
+    border: none;
+    font-weight: 700;
+    transition: all .3s;
+}
+
+.form-btn:hover {
+    cursor: pointer;
+}
+
 /* MEDIA QUERYS */
 @media only screen and (min-width: 768px) {
-    .header-container  {
-        display:flex;
-        justify-content: space-between;
+.header-container  {
+    display:flex;
+    justify-content: space-between;
     }
 }

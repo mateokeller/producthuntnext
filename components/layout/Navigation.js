@@ -5,8 +5,8 @@ const  Navigation = () => {
     return (
     <nav>
         <Link href='/'>Inicio</Link>
-        <Link href='/'>Populares</Link>
-        <Link href='/'>Nuevo producto</Link>
+        <Link href='/populars'>Populares</Link>
+        <Link href='/newProduct'>Nuevo producto</Link>
     </nav>
 )
 }

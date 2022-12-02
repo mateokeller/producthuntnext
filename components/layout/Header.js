@@ -6,27 +6,35 @@ import Button from '../ui/Button';
 
 
 const Header = () => {
+
+    const user = false;
+
     return (
         <header>
             <div className='header-container'>
-                <div>
+                <div className='nav-container'>
                     <Link href={'/'}>
                         <p className='logo'>P</p>
                     </Link>
-                    
                     <Search />
                     <Navigation />
                 </div>
 
-                <div>
-                    <p>Hola: Usuario</p>
+                <div className='user-config-container'>
+                    {user ? 
+                    <>
+                        <p className='user-name'>Hola: Usuario</p>
                         <Button type='button' bgColor='true'>Cerrar sesion</Button>
-                            <Link href='/'>
-                                <Button bgColor='true'>Login</Button>
-                            </Link>
-                            <Link href='/'>
-                                <Button>Crear cuenta</Button>
-                            </Link>
+                    </>
+                    :<>
+                        <Link href='/login'>
+                            <Button bgColor='true'>Login</Button>
+                        </Link>
+                        <Link href='/createAccount'>
+                            <Button>Crear cuenta</Button>
+                        </Link>
+                    </>
+                    }
                 </div>
             </div>
         </header>
