@@ -15,6 +15,7 @@ const useValidation = ( initialState, validate, fn ) => {
             }
             setErrors( false );
         }
+        //eslint-disable-next-line
     }, [errors] );
 
     /* Funcion que se ejecuta conforme el usuario escribe algo */
