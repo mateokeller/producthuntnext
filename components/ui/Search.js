@@ -1,12 +1,16 @@
-import React from 'react'
+import React from "react";
 
 const Search = () => {
-return (
-    <form className='input-nav-container'>
-        <input type="text" placeholder='Buscar Productos' className='search-input'/>
-        <button type='submit' className='submit-input'></button>
-    </form>
-)
-}
+  return (
+    <div className="input-nav-container">
+      <input
+        type="text"
+        placeholder="Buscar Productos"
+        className="search-input"
+      />
+      <button type="submit" className="submit-input"></button>
+    </div>
+  );
+};
 
 export default Search;
