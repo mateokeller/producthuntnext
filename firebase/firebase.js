@@ -1,10 +1,13 @@
-import app, { initializeApp } from "firebase/app";
+import app from "firebase/compat/app";
+import { initializeApp } from "firebase/app";
 
 import firebaseConfig from "./config";
 
 class Firebase {
   constructor() {
-    const app = initializeApp(firebaseConfig);
+    if (!app.apps.lenght) {
+      const app = initializeApp(firebaseConfig);
+    }
   }
 }
 
