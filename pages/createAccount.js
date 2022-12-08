@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "../components/layout/Layout";
+
+import firebase from "../firebase";
 
 // validaciones
 import useValidation from "../hooks/useValidation";
@@ -12,13 +14,23 @@ const INITIAL_STATE = {
 };
 
 const CreateAccount = () => {
-  const { values, errors, submitForm, handleChange, handleSubmit, handleBlur } =
+  const [error, setError] = useState(false);
+
+  const { values, errors, handleChange, handleSubmit, handleBlur } =
     useValidation(INITIAL_STATE, validateCreateAccount, createAccount);
 
   const { name, email, password } = values;
 
-  function createAccount() {
-    console.log("Creando cuenta...");
+  async function createAccount() {
+    try {
+      await firebase.register(name, email, password);
+    } catch (error) {
+      console.log(
+        "Hubo un error al crear el usuario",
+        error.localizedDescription
+      );
+      setError(error.message);
+    }
   }
 
   return (
@@ -77,6 +89,8 @@ const CreateAccount = () => {
             {errors.password && (
               <div className="error-message text-center">{errors.password}</div>
             )}
+
+            {error && <div className="error-message text-center">{error}</div>}
 
             <input className="form-btn" type="submit" value="Crear Cuenta" />
           </form>

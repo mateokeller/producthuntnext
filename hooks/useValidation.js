@@ -12,10 +12,10 @@ const useValidation = (initialState, validate, fn) => {
       if (noErrors) {
         fn(); /* funcion que ejecuta el componente */
       }
-      setErrors(false);
+      setSubmitForm(false);
     }
     //eslint-disable-next-line
-  }, []);
+  }, [errors]);
 
   /* Funcion que se ejecuta conforme el usuario escribe algo */
   const handleChange = (e) => {
@@ -42,7 +42,6 @@ const useValidation = (initialState, validate, fn) => {
   return {
     values,
     errors,
-    submitForm,
     handleChange,
     handleSubmit,
     handleBlur,
