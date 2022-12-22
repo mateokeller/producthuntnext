@@ -2,6 +2,7 @@ import app from "firebase/compat/app";
 import { initializeApp } from "firebase/app";
 import {
   createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
   getAuth,
   updateProfile,
 } from "firebase/auth";
@@ -28,6 +29,11 @@ class Firebase {
     return await updateProfile(newUser.user, {
       displayName: name,
     });
+  }
+
+  // Inicia sesion
+  async login(email, password) {
+    const login = await signInWithEmailAndPassword(this.auth, email, password);
   }
 }
 
