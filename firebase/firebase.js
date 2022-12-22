@@ -34,6 +34,7 @@ class Firebase {
   // Inicia sesion
   async login(email, password) {
     const login = await signInWithEmailAndPassword(this.auth, email, password);
+    return login;
   }
 }
 
