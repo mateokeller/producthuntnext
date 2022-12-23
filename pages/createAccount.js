@@ -51,9 +51,9 @@ const CreateAccount = () => {
               />
             </div>
 
-            {errors.name && (
+            {errors.name ? (
               <div className="error-message text-center">{errors.name}</div>
-            )}
+            ) : null}
 
             <div className="form-field">
               <label htmlFor="email">Email</label>
@@ -68,9 +68,9 @@ const CreateAccount = () => {
               />
             </div>
 
-            {errors.email && (
+            {errors.email ? (
               <div className="error-message text-center">{errors.email}</div>
-            )}
+            ) : null}
 
             <div className="form-field">
               <label htmlFor="password">Password</label>
@@ -85,11 +85,13 @@ const CreateAccount = () => {
               />
             </div>
 
-            {errors.password && (
+            {errors.password ? (
               <div className="error-message text-center">{errors.password}</div>
-            )}
+            ) : null}
 
-            {error && <div className="error-message text-center">{error}</div>}
+            {error ? (
+              <div className="error-message text-center">{error}</div>
+            ) : null}
 
             <input className="form-btn" type="submit" value="Crear Cuenta" />
           </form>

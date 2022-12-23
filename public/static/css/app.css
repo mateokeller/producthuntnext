@@ -167,6 +167,12 @@ nav a:last-of-type {
   margin-top: 5rem;
 }
 
+fieldset {
+  margin: 2rem 0;
+  border: 1px solid #e1e1e1;
+  padding: 2rem;
+}
+
 form {
   max-width: 600px;
   width: 95%;
@@ -184,9 +190,14 @@ form {
   font-size: 1.8rem;
 }
 
-.form-field > input {
+.form-field > input,
+textarea {
   flex: 1;
   padding: 1rem;
+}
+
+.form-field > textarea {
+  height: 200px;
 }
 
 .form-btn {
