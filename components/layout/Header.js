@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import Search from "../ui/Search";
 import Navigation from "./Navigation";
 import Link from "next/link";
+
 import Button from "../ui/Button";
 import { FirebaseContext } from "../../firebase";
 
