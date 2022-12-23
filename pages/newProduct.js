@@ -1,4 +1,3 @@
-import Router from "next/router";
 import React, { useState } from "react";
 import Layout from "../components/layout/Layout";
 
@@ -6,7 +5,7 @@ import firebase from "../firebase";
 
 // validaciones
 import useValidation from "../hooks/useValidation";
-import validateCreateAccount from "../validation/validateCreateAccount";
+import validateCreateProduct from "../validation/validateCreateProduct";
 
 const INITIAL_STATE = {
   name: "",
@@ -20,11 +19,22 @@ const NewProduct = () => {
   const [error, setError] = useState(false);
 
   const { values, errors, handleChange, handleSubmit, handleBlur } =
-    useValidation(INITIAL_STATE, validateCreateAccount, createAccount);
+    useValidation(INITIAL_STATE, validateCreateProduct, createAccount);
 
   const { name, company, image, url, description } = values;
 
-  async function createAccount() {}
+  async function createAccount() {
+    try {
+      await firebase.register(name, email, password);
+      Router.push("/");
+    } catch (error) {
+      console.log(
+        "Hubo un error al crear el usuario",
+        error.localizedDescription
+      );
+      setError(error.message);
+    }
+  }
 
   return (
     <div>
@@ -33,42 +43,39 @@ const NewProduct = () => {
           <h1 className="create-account-title text-center">Nuevo Producto</h1>
           <form onSubmit={handleSubmit} noValidate>
             <fieldset>
-              <legend>Informacion General</legend>
-
+              <legend>Informacion general</legend>
               <div className="form-field">
                 <label htmlFor="name">Nombre</label>
                 <input
                   type="text"
                   id="name"
-                  placeholder="Nombre del Producto"
+                  placeholder="Tu nombre"
                   name="name"
                   value={name}
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
               </div>
-
               {errors.name ? (
                 <div className="error-message text-center">{errors.name}</div>
               ) : null}
-
               <div className="form-field">
                 <label htmlFor="company">Empresa</label>
                 <input
                   type="text"
                   id="company"
-                  placeholder="Nombre de Empresa o Compañia"
+                  placeholder="Nombre empresa o compañía"
                   name="company"
                   value={company}
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
               </div>
-
-              {error.company ? (
-                <div className="error-message text-center">{error.company}</div>
+              {errors.company ? (
+                <div className="error-message text-center">
+                  {errors.company}
+                </div>
               ) : null}
-
               <div className="form-field">
                 <label htmlFor="image">Imagen</label>
                 <input
@@ -80,11 +87,9 @@ const NewProduct = () => {
                   onBlur={handleBlur}
                 />
               </div>
-
-              {error.image ? (
-                <div className="error-message text-center">{error.image}</div>
+              {errors.image ? (
+                <div className="error-message text-center">{errors.image}</div>
               ) : null}
-
               <div className="form-field">
                 <label htmlFor="url">URL</label>
                 <input
@@ -96,19 +101,16 @@ const NewProduct = () => {
                   onBlur={handleBlur}
                 />
               </div>
-
-              {error.url ? (
-                <div className="error-message text-center">{error.url}</div>
+              {errors.url ? (
+                <div className="error-message text-center">{errors.url}</div>
               ) : null}
             </fieldset>
 
             <fieldset>
-              <legend>Sobre tu Producto</legend>
-
+              <legend>Sobre el producto</legend>
               <div className="form-field">
-                <label htmlFor="description">Descripcion</label>
+                <label htmlFor="description">Descripción</label>
                 <textarea
-                  type="description"
                   id="description"
                   name="description"
                   value={description}
@@ -117,9 +119,9 @@ const NewProduct = () => {
                 />
               </div>
 
-              {error.description ? (
+              {errors.description ? (
                 <div className="error-message text-center">
-                  {error.description}
+                  {errors.description}
                 </div>
               ) : null}
             </fieldset>
@@ -135,4 +137,5 @@ const NewProduct = () => {
     </div>
   );
 };
+
 export default NewProduct;
