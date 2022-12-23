@@ -5,6 +5,7 @@ import {
   signInWithEmailAndPassword,
   getAuth,
   updateProfile,
+  signOut,
 } from "firebase/auth";
 
 import firebaseConfig from "./config";
@@ -35,6 +36,12 @@ class Firebase {
   async login(email, password) {
     const login = await signInWithEmailAndPassword(this.auth, email, password);
     return login;
+  }
+
+  // Cierra la sesión del usuario
+  async signOut() {
+    const signOut = await this.auth.signOut();
+    return signOut;
   }
 }
 

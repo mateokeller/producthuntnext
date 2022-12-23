@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import Search from "../ui/Search";
 import Navigation from "./Navigation";
 import Link from "next/link";
 import Button from "../ui/Button";
+import { FirebaseContext } from "../../firebase";
 
 const Header = () => {
-  const user = false;
+  const { user, firebase } = useContext(FirebaseContext);
 
   return (
     <header>
@@ -21,8 +22,12 @@ const Header = () => {
         <div className="user-config-container">
           {user ? (
             <>
-              <p className="user-name">Hola: Usuario</p>
-              <Button type="button" bgColor="true">
+              <p className="user-name">Hola: {user.displayName}</p>
+              <Button
+                type="button"
+                bgColor="true"
+                signOut={() => firebase.signOut()}
+              >
                 Cerrar sesion
               </Button>
             </>
