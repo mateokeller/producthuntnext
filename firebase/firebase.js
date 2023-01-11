@@ -1,5 +1,6 @@
 import app from "firebase/compat/app";
 import { initializeApp } from "firebase/app";
+
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -9,12 +10,17 @@ import {
 } from "firebase/auth";
 
 import firebaseConfig from "./config";
+import "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
 class Firebase {
   constructor() {
     if (!app.apps.lenght) {
       const app = initializeApp(firebaseConfig);
       this.auth = getAuth();
+      this.db = getFirestore(app);
+      this.storage = getStorage(this.app);
     }
   }
 

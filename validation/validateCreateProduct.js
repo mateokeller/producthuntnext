@@ -1,26 +1,27 @@
 export default function validateCreateProduct(values) {
   let errors = {};
 
-  // validar el nombre de usuario
+  // validar el nombre del producto
   if (!values.name) {
     errors.name = "El nombre es obligatorio";
   }
 
-  // validar empresa
+  // validar la empresa
   if (!values.company) {
-    errors.company = "Nombre de Empresa es obligatorio";
+    errors.company = "El nombre de la empresa es obligatorio";
   }
 
-  // validar el password
+  // validar la url
   if (!values.url) {
-    errors.url = "La URL del producto es obligatoria";
-  } else if (!/^(ftp|http|https): \/\/ [^"]+$/.test(values.url)) {
-    errors.url = "URL mal formateada o no valida";
+    errors.url = "La url del producto es obligatoria";
+  } else if (!/^(ftp|http|https):\/\/[^"]+$/.test(values.url)) {
+    errors.url = "URL mal formateada o no válida";
   }
 
-  // validar descripcion
+  // validar descripcionS
   if (!values.description) {
-    errors.description = "Agrega una descripcion a tu producto";
+    errors.description = "Agrega una descripción de tu producto";
   }
+
   return errors;
 }
