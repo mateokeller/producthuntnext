@@ -24,19 +24,19 @@ const NewProduct = () => {
   const { values, errors, handleChange, handleSubmit, handleBlur } =
     useValidation(INITIAL_STATE, validateCreateProduct, createProduct);
 
-  const { name, company, image, url, description, imgURL } = values;
+  const { name, company, image, url, description, imageURL } = values;
 
   // context con las operaciones crud de firebase
   const { user, firebase } = useContext(FirebaseContext);
 
   // States para la subida de la imagen
   const [uploading, setUploading] = useState(false);
-  const [URLImage, setURLImage] = useState("");
+  const [imgURL, setImageURL] = useState("");
 
   const handleImageUpload = (e) => {
     // Se obtiene referencia de la ubicación donde se guardará la imagen
     const file = e.target.files[0];
-    const imageRef = ref(firebase.storage, "products/" + file.name);
+    const imageRef = ref(firebase.storage, `/posts ${file.name}`);
 
     // Se inicia la subida
     setUploading(true);
@@ -61,7 +61,7 @@ const NewProduct = () => {
         setUploading(false);
         getDownloadURL(uploadTask.snapshot.ref).then((imgURL) => {
           console.log("Image available at:", imgURL);
-          setURLImage(imgURL);
+          setImageURL(imgURL);
         });
       }
     );
@@ -78,7 +78,7 @@ const NewProduct = () => {
       name,
       company,
       url,
-      image: imgURL,
+      imageURL: imgURL,
       description,
       votes: 0,
       comments: [],
@@ -155,7 +155,6 @@ const NewProduct = () => {
                   accept="image/*"
                   type="file"
                   id="image"
-                  value={image}
                   name="image"
                   onChange={handleImageUpload}
                 />
