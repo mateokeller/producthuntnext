@@ -12,7 +12,7 @@ const Home = () => {
   const { firebase } = useContext(FirebaseContext);
 
   useEffect(() => {
-    const obtainProducts = () => {
+    const getProducts = () => {
       const querySnapshot = collection(firebase.db, "products");
       onSnapshot(querySnapshot, ({ docs }) => {
         const newProducts = docs.map((doc) => {
@@ -27,7 +27,7 @@ const Home = () => {
         setProducts(newProducts);
       });
     };
-    obtainProducts();
+    getProducts();
   }, []);
 
   return (

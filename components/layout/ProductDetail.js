@@ -2,6 +2,7 @@
 import React from "react";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { es } from "date-fns/locale";
+import Link from "next/link";
 
 const ProductDetail = ({ product }) => {
   console.log(product);
@@ -25,7 +26,9 @@ const ProductDetail = ({ product }) => {
           <img src={imageURL} alt="image" className="product-image" />
         </div>
         <div>
-          <h1 className="product-title">{name}</h1>
+          <Link href="/products/[id]" as={`/products/${id}`}>
+            <h1 className="product-title">{name}</h1>
+          </Link>
           <p className="text-description">{description}</p>
           <div className="product-comments">
             <div>
