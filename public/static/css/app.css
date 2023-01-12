@@ -228,6 +228,99 @@ textarea {
   margin: 2rem 0;
 }
 
+.comment-icon {
+  width: 24px;
+}
+
+.product {
+  padding: 4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e1e1e1;
+}
+
+.product-list {
+  background-color: var(--grey3);
+}
+
+.products-container {
+  padding: 5rem 10rem;
+}
+
+.product-image {
+  width: 200px;
+}
+
+.product-description {
+  flex: 0 1 600px;
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  column-gap: 2rem;
+}
+
+.product-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.product-title:hover {
+  cursor: pointer;
+}
+
+.text-description {
+  font-size: 1.6rem;
+  margin: 0;
+  color: #888;
+}
+
+.product-comments {
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+}
+
+.product-comments div {
+  display: flex;
+  align-items: center;
+  border: 1px solid #e1e1e1;
+  padding: 0.3rem 1rem;
+  margin-right: 2rem;
+}
+
+.product-comments div img {
+  width: 2rem;
+  margin-right: 2rem;
+}
+
+.product-comments div p {
+  font-size: 1.6rem;
+  margin-right: 1rem;
+  font-weight: 700;
+}
+
+.product-comments div p:last-of-type {
+  margin: 0;
+}
+
+.product-votes {
+  flex: 0 0 auto;
+  text-align: center;
+  border: 1px solid #e1e1e1;
+  padding: 1rem 3rem;
+}
+
+.product-votes div {
+  font-size: 2rem;
+}
+
+.product-votes div p {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
 /* MEDIA QUERYS */
 @media only screen and (min-width: 768px) {
   .header-container {

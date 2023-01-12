@@ -37,7 +37,7 @@ const Home = () => {
           <div className="products-container">
             <ul className="bg-white">
               {products.map((product, id) => (
-                <ProductDetail key={product.id} />
+                <ProductDetail key={product.id} product={product} />
               ))}
             </ul>
           </div>
