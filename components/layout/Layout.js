@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-css-tags */
+/* eslint-disable @next/next/no-page-custom-font */
 import React from "react";
 import Header from "./Header";
 import Head from "next/head";
