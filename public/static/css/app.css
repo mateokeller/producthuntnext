@@ -69,7 +69,8 @@ img {
   margin-top: 5rem;
 }
 
-#product-container {
+.bold {
+  font-weight: bold;
 }
 
 .loader {
@@ -368,6 +369,11 @@ textarea {
 
 .votes-container {
   margin-top: 5rem;
+}
+
+.comment-text {
+  border: 1px solid #e1e1e1;
+  padding: 2rem;
 }
 
 /* MEDIA QUERYS */

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { useEffect, useContext, useState } from "react";
 import { useRouter } from "next/router";
 import { FirebaseContext } from "../../firebase";
@@ -217,11 +218,11 @@ const Product = () => {
                 <ul>{comments.length === 0 ? <p>No comments yet</p> : null}</ul>
                 <ul>
                   {comments.map((comment, i) => (
-                    <li key={`${comment.userId}-${i}`}>
+                    <li className="comment-text" key={`${comment.userId}-${i}`}>
                       <p>{comment.message}</p>
                       <p>
                         Written by:
-                        <span> {comment.userName}</span>
+                        <span className="bold"> {comment.userName}</span>
                       </p>
                     </li>
                   ))}
