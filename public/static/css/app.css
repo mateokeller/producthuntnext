@@ -114,6 +114,10 @@ img {
   border: 1px solid #d1d1d1;
   padding: 0.6rem 2rem;
   margin-right: 1rem;
+  display: block;
+  margin: 2rem auto;
+  text-align: center;
+  width: 100%;
 }
 
 header a:last-of-type > button {
@@ -360,6 +364,10 @@ textarea {
 
 .comment-title {
   margin: 2rem 0;
+}
+
+.votes-container {
+  margin-top: 5rem;
 }
 
 /* MEDIA QUERYS */

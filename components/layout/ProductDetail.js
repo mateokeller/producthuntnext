@@ -5,8 +5,6 @@ import { es } from "date-fns/locale";
 import Link from "next/link";
 
 const ProductDetail = ({ product }) => {
-  console.log(product);
-
   const {
     id,
     comments,
@@ -37,7 +35,7 @@ const ProductDetail = ({ product }) => {
                 alt="comment icon"
                 className="comment-icon"
               />
-              <p>{comments.length} Comentarios</p>
+              <h>{comments.length} Comentarios</h>
             </div>
           </div>
 

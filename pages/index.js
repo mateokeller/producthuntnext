@@ -35,11 +35,17 @@ const Home = () => {
       <Layout>
         <div className="product-list">
           <div className="products-container">
-            <ul className="bg-white">
-              {products.map((product, id) => (
-                <ProductDetail key={product.id} product={product} />
-              ))}
-            </ul>
+            {products.length === 0 ? (
+              <h1 className="title">No se encuentran productos actualmente.</h1>
+            ) : (
+              <>
+                <ul className="bg-white">
+                  {products.map((product, id) => (
+                    <ProductDetail key={product.id} product={product} />
+                  ))}
+                </ul>
+              </>
+            )}
           </div>
         </div>
       </Layout>

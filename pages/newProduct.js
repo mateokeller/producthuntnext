@@ -1,6 +1,7 @@
 import Layout from "../components/layout/Layout";
 import Router from "next/router";
 import React, { useState, useContext } from "react";
+import Error404 from "../components/layout/Error404";
 
 import { FirebaseContext } from "../firebase";
 import { collection, addDoc } from "firebase/firestore";
@@ -9,6 +10,7 @@ import { ref, getDownloadURL, uploadBytesResumable } from "@firebase/storage";
 // validaciones
 import useValidation from "../hooks/useValidation";
 import validateCreateProduct from "../validation/validateCreateProduct";
+import id from "date-fns/esm/locale/id/index.js";
 
 const INITIAL_STATE = {
   name: "",
@@ -83,6 +85,11 @@ const NewProduct = () => {
       votes: 0,
       comments: [],
       created: Date.now(),
+      creator: {
+        id: user.uid,
+        name: user.displayName,
+      },
+      hasVoted: [],
     };
 
     // insertarlo en la base de datos
@@ -95,118 +102,113 @@ const NewProduct = () => {
     return Router.push("/");
   }
 
-  async function createAccount() {
-    try {
-      await firebase.register(name, email, password);
-      Router.push("/");
-    } catch (error) {
-      console.log(
-        "Hubo un error al crear el usuario",
-        error.localizedDescription
-      );
-      setError(error.message);
-    }
-  }
-
   return (
     <div>
       <Layout>
-        <>
-          <h1 className="create-account-title text-center">Nuevo Producto</h1>
-          <form onSubmit={handleSubmit} noValidate>
-            <fieldset>
-              <legend>Informacion general</legend>
-              <div className="form-field">
-                <label htmlFor="name">Nombre</label>
-                <input
-                  type="text"
-                  id="name"
-                  placeholder="Tu nombre"
-                  name="name"
-                  value={name}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
-              </div>
-              {errors.name ? (
-                <div className="error-message text-center">{errors.name}</div>
-              ) : null}
-              <div className="form-field">
-                <label htmlFor="company">Empresa</label>
-                <input
-                  type="text"
-                  id="company"
-                  placeholder="Nombre empresa o compañía"
-                  name="company"
-                  value={company}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
-              </div>
-              {errors.company ? (
-                <div className="error-message text-center">
-                  {errors.company}
+        {!user ? (
+          <Error404 />
+        ) : (
+          <>
+            <h1 className="create-account-title text-center">Nuevo Producto</h1>
+            <form onSubmit={handleSubmit} noValidate>
+              <fieldset>
+                <legend>Informacion general</legend>
+                <div className="form-field">
+                  <label htmlFor="name">Nombre</label>
+                  <input
+                    type="text"
+                    id="name"
+                    placeholder="Tu nombre"
+                    name="name"
+                    value={name}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
                 </div>
-              ) : null}
+                {errors.name ? (
+                  <div className="error-message text-center">{errors.name}</div>
+                ) : null}
+                <div className="form-field">
+                  <label htmlFor="company">Empresa</label>
+                  <input
+                    type="text"
+                    id="company"
+                    placeholder="Nombre empresa o compañía"
+                    name="company"
+                    value={company}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                </div>
+                {errors.company ? (
+                  <div className="error-message text-center">
+                    {errors.company}
+                  </div>
+                ) : null}
 
-              <div className="form-field">
-                <label htmlFor="image">Imagen</label>
-                <input
-                  accept="image/*"
-                  type="file"
-                  id="image"
-                  name="image"
-                  onChange={handleImageUpload}
-                />
-              </div>
-              {/* {errors.image ? (
+                <div className="form-field">
+                  <label htmlFor="image">Imagen</label>
+                  <input
+                    accept="image/*"
+                    type="file"
+                    id="image"
+                    name="image"
+                    onChange={handleImageUpload}
+                  />
+                </div>
+                {/* {errors.image ? (
                 <div className="error-message text-center">{errors.image}</div>
               ) : null} */}
 
-              <div className="form-field">
-                <label htmlFor="url">URL</label>
-                <input
-                  type="url"
-                  id="url"
-                  name="url"
-                  value={url}
-                  placeholder="URL de tu producto"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
-              </div>
-              {errors.url ? (
-                <div className="error-message text-center">{errors.url}</div>
-              ) : null}
-            </fieldset>
-
-            <fieldset>
-              <legend>Sobre el producto</legend>
-              <div className="form-field">
-                <label htmlFor="description">Descripción</label>
-                <textarea
-                  id="description"
-                  name="description"
-                  value={description}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
-              </div>
-
-              {errors.description ? (
-                <div className="error-message text-center">
-                  {errors.description}
+                <div className="form-field">
+                  <label htmlFor="url">URL</label>
+                  <input
+                    type="url"
+                    id="url"
+                    name="url"
+                    value={url}
+                    placeholder="URL de tu producto"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
                 </div>
+                {errors.url ? (
+                  <div className="error-message text-center">{errors.url}</div>
+                ) : null}
+              </fieldset>
+
+              <fieldset>
+                <legend>Sobre el producto</legend>
+                <div className="form-field">
+                  <label htmlFor="description">Descripción</label>
+                  <textarea
+                    id="description"
+                    name="description"
+                    value={description}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                </div>
+
+                {errors.description ? (
+                  <div className="error-message text-center">
+                    {errors.description}
+                  </div>
+                ) : null}
+              </fieldset>
+
+              {error ? (
+                <div className="error-message text-center">{error}</div>
               ) : null}
-            </fieldset>
 
-            {error ? (
-              <div className="error-message text-center">{error}</div>
-            ) : null}
-
-            <input className="form-btn" type="submit" value="Crear Producto" />
-          </form>
-        </>
+              <input
+                className="form-btn"
+                type="submit"
+                value="Crear Producto"
+              />
+            </form>
+          </>
+        )}
       </Layout>
     </div>
   );
