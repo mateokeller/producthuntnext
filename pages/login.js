@@ -36,7 +36,7 @@ const Login = () => {
       <Layout>
         <>
           <h1 className="create-account-title text-center">Iniciar Sesion</h1>
-          <form onSubmit={handleSubmit} noValidate>
+          <form className="form-center " onSubmit={handleSubmit} noValidate>
             <div className="form-field">
               <label htmlFor="email">Email</label>
               <input

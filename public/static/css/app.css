@@ -157,6 +157,12 @@ nav a:last-of-type {
   text-align: center;
 }
 
+.login-form {
+  max-width: 600px;
+  width: 95%;
+  margin: 5rem auto 0px;
+}
+
 .products-list {
   background-color: #f3f3f3;
 }
@@ -217,7 +223,7 @@ fieldset {
   padding: 2rem;
 }
 
-.new-product-form {
+.form-center {
   max-width: 600px;
   width: 95%;
   margin: 5rem auto 0 auto;
