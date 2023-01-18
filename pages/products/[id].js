@@ -190,12 +190,13 @@ const Product = () => {
             {user && (
               <>
                 <h2>Agrega tu comentario</h2>
-                <form onSubmit={addComment}>
+                <form className="comment-form" onSubmit={addComment}>
                   <div className="form-field">
-                    <label htmlFor="name">Comentario</label>
+                    {/* <label htmlFor="name">Comentario</label> */}
                     <input
                       type="text"
                       name="message"
+                      placeholder="Comentario"
                       onChange={onChangeComment}
                     />
                   </div>
