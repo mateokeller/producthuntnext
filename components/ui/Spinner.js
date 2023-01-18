@@ -4,7 +4,9 @@ import Layout from "../layout/Layout";
 const Spinner = () => {
   return (
     <Layout>
-      <span className="loader"></span>
+      <p className="bold text-center">
+        Cargando <span className="text-center loader"></span>
+      </p>
     </Layout>
   );
 };

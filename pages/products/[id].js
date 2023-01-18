@@ -1,15 +1,24 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
 import { useEffect, useContext, useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { FirebaseContext } from "../../firebase";
-import { getDoc, doc, updateDoc, increment, setDoc } from "firebase/firestore";
+import {
+  getDoc,
+  doc,
+  updateDoc,
+  increment,
+  setDoc,
+  deleteDoc,
+} from "firebase/firestore";
+import { getStorage, ref, deleteObject } from "firebase/storage";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { es } from "date-fns/locale";
 
 import Layout from "../../components/layout/Layout";
 import Error404 from "../../components/layout/Error404";
 import Spinner from "../../components/ui/Spinner";
-import Image from "next/image";
 import Button from "../../components/ui/Button";
 
 const Product = () => {
@@ -18,7 +27,6 @@ const Product = () => {
   const [error, setError] = useState(false);
   const [comment, setComment] = useState({});
   const [consultDB, setConsultDB] = useState(true);
-  // const [loading, setLoading] = useState(false);
 
   //Routing para obtener el id actual
   const Router = useRouter();
@@ -92,6 +100,8 @@ const Product = () => {
     setConsultDB(true); // When voting, then consult db
   };
 
+  const src = imageURL;
+
   // Functions to create comments
   const onChangeComment = (e) => {
     setComment({
@@ -124,8 +134,12 @@ const Product = () => {
     const newComments = [...comments, comment];
 
     // Update db
-    const productRef = doc(firebase.db, "products", id);
-    setDoc(productRef, { comments: newComments }, { merge: true });
+    // const productRef = doc(firebase.db, "products", id);
+    setDoc(
+      doc(firebase.db, "products", id),
+      { comments: newComments },
+      { merge: true }
+    );
 
     // Update state
     setProduct({
@@ -148,101 +162,144 @@ const Product = () => {
   // Delete a product from database
   const deleteProduct = async () => {
     if (!user) {
-      return router.push("/login"); // Security layer
+      return Router.push("/login"); // Security layer
     }
 
     if (creator.id !== user.uid) {
-      return router.push("/");
+      return Router.push("/");
     }
 
     try {
-      await firebase.db.collection("products").doc(id).delete();
-      router.push("/");
+      // delete product
+      await deleteDoc(doc(firebase.db, "products", id));
+
+      // eliminar imagen
+      const storage = getStorage();
+      const imgRef = ref(storage, imageURL);
+      deleteObject(imgRef)
+        .then(() => {
+          // image deleted correctly
+          console.log("product deleted correctly");
+          Router.push("/");
+        })
+        .catch((error) => {
+          console.log("Error: ", error);
+        });
+
+      Router.push("/");
     } catch (error) {
       console.log("ERROR: ", error);
     }
   };
 
+  if (Object.keys(product).length === 0 && !error) return <Spinner />;
+
   return (
     <Layout>
-      {error ? <Error404 /> : null}
+      {error ? (
+        <Error404 />
+      ) : (
+        <div id="container">
+          <h1 id="product-title">{name}</h1>
 
-      <div id="container">
-        <h1 id="product-title">{name}</h1>
-
-        <div id="product-container">
-          <div>
-            <p>
-              Publicado hace{" "}
-              {created
-                ? formatDistanceToNow(new Date(created), { locale: es })
-                : null}
-            </p>
-            {creator ? (
+          <div id="product-container">
+            <div>
               <p>
-                Publicado por: <strong>{creator.name}</strong> of {company}
+                Publicado hace{" "}
+                {created
+                  ? formatDistanceToNow(new Date(created), { locale: es })
+                  : null}
               </p>
-            ) : null}
+              {creator ? (
+                <p>
+                  Publicado por: <strong>{creator.name}</strong> of {company}
+                </p>
+              ) : null}
+              <div></div>
+              <div className="product-image-container">
+                <Image
+                  className="product-image"
+                  loader={() => src}
+                  src={src}
+                  alt="product image"
+                  fill
+                />
+              </div>
 
-            <img src={imageURL} alt="product image" />
+              <p>{description}</p>
+              {user && (
+                <>
+                  <h2>Agrega tu comentario</h2>
+                  <form className="comment-form" onSubmit={addComment}>
+                    <div className="form-field">
+                      {/* <label htmlFor="name">Comentario</label> */}
+                      <input
+                        type="text"
+                        name="message"
+                        placeholder="Comentario"
+                        onChange={onChangeComment}
+                      />
+                    </div>
 
-            <p>{description}</p>
-            {user && (
-              <>
-                <h2>Agrega tu comentario</h2>
-                <form className="comment-form" onSubmit={addComment}>
-                  <div className="form-field">
-                    {/* <label htmlFor="name">Comentario</label> */}
                     <input
-                      type="text"
-                      name="message"
-                      placeholder="Comentario"
-                      onChange={onChangeComment}
+                      className="form-btn"
+                      type="submit"
+                      value="Agregar comentario"
                     />
-                  </div>
+                  </form>
+                </>
+              )}
 
-                  <input
-                    className="form-btn"
-                    type="submit"
-                    value="Agregar comentario"
-                  />
-                </form>
-              </>
-            )}
+              <h2 className="comment-title">Comentarios</h2>
 
-            <h2 className="comment-title">Comentarios</h2>
+              {comments === undefined ? (
+                <p>No comments yet</p>
+              ) : (
+                <>
+                  <ul>
+                    {comments.length === 0 ? <p>No comments yet</p> : null}
+                  </ul>
+                  <ul>
+                    {comments.map((comment, i) => (
+                      <li
+                        className="comment-text"
+                        key={`${comment.userId}-${i}`}
+                      >
+                        <p>{comment.message}</p>
+                        <p>
+                          Written by:
+                          <span className="bold"> {comment.userName}</span>
+                        </p>
 
-            {comments === undefined ? (
-              <p>No comments yet</p>
-            ) : (
-              <>
-                <ul>{comments.length === 0 ? <p>No comments yet</p> : null}</ul>
-                <ul>
-                  {comments.map((comment, i) => (
-                    <li className="comment-text" key={`${comment.userId}-${i}`}>
-                      <p>{comment.message}</p>
-                      <p>
-                        Written by:
-                        <span className="bold"> {comment.userName}</span>
-                      </p>
-                    </li>
-                  ))}
-                </ul>
-              </>
-            )}
-          </div>
-          <aside>
-            <a target="_blank" rel="noreferrer" href={url}>
-              <Button bgColor="true">Visitar URL</Button>
-            </a>
-            <div className="votes-container">
-              <p className="text-center">{votes} Votos</p>
-
-              {user ? <Button onClick={upvoteProduct}>Votar</Button> : null}
+                        {isCreator(comment.userId) ? (
+                          <p className="creator-text">Creado por</p>
+                        ) : null}
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )}
             </div>
-          </aside>
+            <aside>
+              <a target="_blank" rel="noreferrer" href={url}>
+                <Button bgColor="true">Visitar URL</Button>
+              </a>
+              <div className="votes-container">
+                <p className="text-center">{votes} Votos</p>
+
+                {user ? <Button onClick={upvoteProduct}>Votar</Button> : null}
+              </div>
+            </aside>
+          </div>
+          {creator === undefined ? null : (
+            <>
+              {canDelete() && (
+                <Button onClick={deleteProduct}>Delete Product</Button>
+              )}
+            </>
+          )}
         </div>
-      </div>
+      )}
     </Layout>
   );
 };
