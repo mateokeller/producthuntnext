@@ -293,9 +293,9 @@ const Product = () => {
           </div>
           {creator === undefined ? null : (
             <>
-              {canDelete() && (
+              {canDelete() ? (
                 <Button onClick={deleteProduct}>Delete Product</Button>
-              )}
+              ) : null}
             </>
           )}
         </div>
