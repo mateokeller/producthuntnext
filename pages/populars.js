@@ -2,8 +2,6 @@ import React, { useEffect, useState, useContext } from "react";
 import Layout from "../components/layout/Layout";
 import ProductDetail from "../components/layout/ProductDetail";
 
-import { FirebaseContext } from "../firebase";
-import { collection, onSnapshot } from "firebase/firestore";
 import useProducts from "../hooks/useProducts";
 
 const Populars = () => {
