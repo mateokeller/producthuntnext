@@ -1,12 +1,35 @@
-import React from 'react';
-import Layout from '../components/layout/Layout';
+import React, { useEffect, useState, useContext } from "react";
+import Layout from "../components/layout/Layout";
+import ProductDetail from "../components/layout/ProductDetail";
 
-const Populars = () => (
+import { FirebaseContext } from "../firebase";
+import { collection, onSnapshot } from "firebase/firestore";
+import useProducts from "../hooks/useProducts";
+
+const Populars = () => {
+  const { products } = useProducts("votes");
+
+  return (
     <div>
-        <Layout>
-            <h1>Populares</h1>
-        </Layout>
+      <Layout>
+        <div className="product-list">
+          <div className="products-container">
+            {products.length === 0 ? (
+              <h1 className="title">No se encuentran productos actualmente.</h1>
+            ) : (
+              <>
+                <ul className="bg-white">
+                  {products.map((product, id) => (
+                    <ProductDetail key={product.id} product={product} />
+                  ))}
+                </ul>
+              </>
+            )}
+          </div>
+        </div>
+      </Layout>
     </div>
-)
+  );
+};
 
 export default Populars;

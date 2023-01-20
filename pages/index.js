@@ -5,30 +5,10 @@ import ProductDetail from "../components/layout/ProductDetail";
 
 import { FirebaseContext } from "../firebase";
 import { collection, onSnapshot } from "firebase/firestore";
+import useProducts from "../hooks/useProducts";
 
 const Home = () => {
-  const [products, setProducts] = useState([]);
-
-  const { firebase } = useContext(FirebaseContext);
-
-  useEffect(() => {
-    const getProducts = () => {
-      const querySnapshot = collection(firebase.db, "products");
-      onSnapshot(querySnapshot, ({ docs }) => {
-        const newProducts = docs.map((doc) => {
-          const data = doc.data();
-          const id = doc.id;
-
-          return {
-            ...data,
-            id,
-          };
-        });
-        setProducts(newProducts);
-      });
-    };
-    getProducts();
-  }, []);
+  const { products } = useProducts("created");
 
   return (
     <div>
