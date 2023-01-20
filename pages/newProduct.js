@@ -4,7 +4,7 @@ import React, { useState, useContext } from "react";
 import Error404 from "../components/layout/Error404";
 
 import { FirebaseContext } from "../firebase";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, doc } from "firebase/firestore";
 import { ref, getDownloadURL, uploadBytesResumable } from "@firebase/storage";
 
 // validaciones
@@ -38,7 +38,8 @@ const NewProduct = () => {
   const handleImageUpload = (e) => {
     // Se obtiene referencia de la ubicación donde se guardará la imagen
     const file = e.target.files[0];
-    const imageRef = ref(firebase.storage, `/posts ${file.name}`);
+    const randomId = doc(collection(firebase.db, "temp")).id;
+    const imageRef = ref(firebase.storage, `/posts ${(file.name, randomId)}`);
 
     // Se inicia la subida
     setUploading(true);
@@ -152,8 +153,8 @@ const NewProduct = () => {
                     accept="image/*"
                     type="file"
                     id="image"
-                    name="image"
                     onChange={handleImageUpload}
+                    name="image"
                   />
                 </div>
                 {/* {errors.image ? (
