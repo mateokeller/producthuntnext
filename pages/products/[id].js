@@ -1,17 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @next/next/no-img-element */
+
 import { useEffect, useContext, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { FirebaseContext } from "../../firebase";
-import {
-  getDoc,
-  doc,
-  updateDoc,
-  increment,
-  setDoc,
-  deleteDoc,
-} from "firebase/firestore";
+import { getDoc, doc, setDoc, deleteDoc } from "firebase/firestore";
 import { getStorage, ref, deleteObject } from "firebase/storage";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { es } from "date-fns/locale";
