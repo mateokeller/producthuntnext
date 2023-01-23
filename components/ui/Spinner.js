@@ -5,7 +5,7 @@ const Spinner = () => {
   return (
     <Layout>
       <p className="bold text-center">
-        Cargando <span className="text-center loader"></span>
+        Cargando <span className="text-center spinner"></span>
       </p>
     </Layout>
   );
