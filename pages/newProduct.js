@@ -1,6 +1,6 @@
+import React, { useState, useContext } from "react";
 import Layout from "../components/layout/Layout";
 import Router from "next/router";
-import React, { useState, useContext } from "react";
 import Error404 from "../components/layout/Error404";
 
 import { FirebaseContext } from "../firebase";
@@ -10,7 +10,6 @@ import { ref, getDownloadURL, uploadBytesResumable } from "@firebase/storage";
 // validaciones
 import useValidation from "../hooks/useValidation";
 import validateCreateProduct from "../validation/validateCreateProduct";
-import id from "date-fns/esm/locale/id/index.js";
 
 const INITIAL_STATE = {
   name: "",
