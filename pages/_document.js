@@ -1,15 +1,11 @@
 /* eslint-disable @next/next/no-css-tags */
-/* eslint-disable @next/next/no-page-custom-font */
-import React from "react";
-import Header from "./Header";
-import Head from "./Head";
+import { Html, Head, Main, NextScript } from "next/document";
 
-const Layout = (props) => {
+export default function Document() {
   return (
-    <>
-      {/* <Head>
+    <Html>
+      <Head>
         <html lang="es" />
-        <title>Product Hunt</title>
         <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
@@ -24,13 +20,11 @@ const Layout = (props) => {
           rel="stylesheet"
         />
         <link rel="stylesheet" href="/static/css/app.css" />
-      </Head> */}
-      <Head />
-
-      <Header />
-      <main>{props.children}</main>
-    </>
+      </Head>
+      <body>
+        <Main />
+        <NextScript />
+      </body>
+    </Html>
   );
-};
-
-export default Layout;
+}

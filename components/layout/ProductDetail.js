@@ -35,7 +35,7 @@ const ProductDetail = ({ product }) => {
                 alt="comment icon"
                 className="comment-icon"
               />
-              <h>{comments.length} Comentarios</h>
+              <p>{comments.length} Comentarios</p>
             </div>
           </div>
 
